@@ -25,9 +25,15 @@ public class StringCalculatorShould {
 
     @Test
     public void return_number_when_only_one_number_is_passed() {
-
         int result = stringCalculator.add("1");
 
         assertEquals(result, 1);
+    }
+
+    @Test
+    public void returm_sum_of_numbers_delimited_by_commas() {
+        int result = stringCalculator.add("1,2,3,4");
+
+        assertEquals(result, 10);
     }
 }
