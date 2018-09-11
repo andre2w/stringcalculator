@@ -1,6 +1,8 @@
 package com.codurance.andre;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
 
@@ -16,9 +18,34 @@ public class StringCalculator {
         String delimiters = getDelimiters(operation);
         operation = cleanOperationFromDelimiters(operation);
 
-        return Arrays.stream(operation.split(delimiters))
+        int[] numbers = Arrays.stream(operation.split(delimiters))
                 .mapToInt(Integer::parseInt)
+                .toArray();
+
+        validateNumbers(numbers);
+
+        return Arrays.stream(numbers)
+                .filter(number -> number <= 1000)
                 .sum();
+    }
+
+    private void validateNumbers(int[] numbers) {
+        if (hasNegative(numbers)) {
+            String negativeNumbers = filterNegativeNumbers(numbers);
+            throw new IllegalArgumentException(negativeNumbers);
+        }
+    }
+
+    private String filterNegativeNumbers(int[] numbers) {
+        return Arrays.stream(numbers)
+                .filter(number -> number < 0)
+                .mapToObj(String::valueOf)
+                .reduce("" ,(number, acumulated) -> acumulated += "," + number);
+    }
+
+    private boolean hasNegative(int[] numbers) {
+        return Arrays.stream(numbers)
+                .anyMatch(number -> number < 0);
     }
 
     private String cleanOperationFromDelimiters(String operation) {
