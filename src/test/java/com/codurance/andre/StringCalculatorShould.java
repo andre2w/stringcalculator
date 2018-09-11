@@ -50,4 +50,11 @@ public class StringCalculatorShould {
 
         assertEquals(result, 10);
     }
+
+    @Test
+    public void accept_custom_delimiters() {
+        int result = stringCalculator.add("//;\n1;2;3;4");
+
+        assertEquals(result, 10);
+    }
 }
