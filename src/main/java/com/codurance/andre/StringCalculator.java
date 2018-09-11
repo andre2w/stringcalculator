@@ -13,7 +13,7 @@ public class StringCalculator {
         if (operation.length() == 1)
             return parseInt(operation);
 
-        String delimiters = getDelimiters(operation);
+        String delimiters = buildDelimiterRegex(operation);
         operation = cleanOperationFromDelimiters(operation);
 
         int[] numbers = Arrays.stream(operation.split(delimiters))
@@ -57,20 +57,29 @@ public class StringCalculator {
         return operation.startsWith("//");
     }
 
-    private String getDelimiters(String operation) {
+    private String buildDelimiterRegex(String operation) {
         String delimiters = "\\n|,";
 
         if (hasCustomDelimiter(operation)) {
             String customDelimiter = operation.split("\n")[0].substring(2);
 
-
-            if (customDelimiter.startsWith("[")) {
-                customDelimiter = customDelimiter.substring(1, customDelimiter.length() -1);
-            }
-
-            delimiters += "|" + customDelimiter;
+            delimiters += buildCustomDelimiters(customDelimiter);
         }
 
         return delimiters;
+    }
+
+    private String buildCustomDelimiters(String delimiterInput) {
+        if (delimiterInput.startsWith("[")) {
+            delimiterInput = delimiterInput.substring(1, delimiterInput.length() -1);
+        }
+
+        String customDelimiters = "";
+
+        for (String delimiter : delimiterInput.split("]\\[")) {
+            customDelimiters += "|" + delimiter;
+        }
+
+        return customDelimiters;
     }
 }
