@@ -1,8 +1,6 @@
 package com.codurance.andre;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
 
@@ -63,9 +61,16 @@ public class StringCalculator {
         String delimiters = "\\n|,";
 
         if (hasCustomDelimiter(operation)) {
-            String customDelimiter = operation.split("\n")[0];
-            delimiters += "|" + customDelimiter.substring(2);
+            String customDelimiter = operation.split("\n")[0].substring(2);
+
+
+            if (customDelimiter.startsWith("[")) {
+                customDelimiter = customDelimiter.substring(1, customDelimiter.length() -1);
+            }
+
+            delimiters += "|" + customDelimiter;
         }
+
         return delimiters;
     }
 }

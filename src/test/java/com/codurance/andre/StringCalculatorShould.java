@@ -76,4 +76,11 @@ public class StringCalculatorShould {
 
         assertEquals(2, result);
     }
+
+    @Test
+    public void deal_with_lengthy_delimiters() {
+        int result = stringCalculator.add("//[%%%]\n1%%%2%%%3%%%4");
+
+        assertEquals(10, result);
+    }
 }
