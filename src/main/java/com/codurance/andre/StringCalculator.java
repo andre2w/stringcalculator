@@ -29,12 +29,12 @@ public class StringCalculator {
 
     private void validateNumbers(int[] numbers) {
         if (hasNegative(numbers)) {
-            String negativeNumbers = filterNegativeNumbers(numbers);
+            String negativeNumbers = listNegativeNumbers(numbers);
             throw new IllegalArgumentException(negativeNumbers);
         }
     }
 
-    private String filterNegativeNumbers(int[] numbers) {
+    private String listNegativeNumbers(int[] numbers) {
         return Arrays.stream(numbers)
                 .filter(number -> number < 0)
                 .mapToObj(String::valueOf)
@@ -58,15 +58,18 @@ public class StringCalculator {
     }
 
     private String buildDelimiterRegex(String operation) {
-        String delimiters = "\\n|,";
+        String baseRegex = "\\n|,";
+        return baseRegex + buildRegexForCustomDelimiters(operation);
+    }
 
+    private String buildRegexForCustomDelimiters(String operation) {
         if (hasCustomDelimiter(operation)) {
             String customDelimiter = operation.split("\n")[0].substring(2);
 
-            delimiters += buildCustomDelimiters(customDelimiter);
+            return buildCustomDelimiters(customDelimiter);
         }
 
-        return delimiters;
+        return "";
     }
 
     private String buildCustomDelimiters(String delimiterInput) {
