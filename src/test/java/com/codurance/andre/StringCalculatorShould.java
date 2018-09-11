@@ -31,8 +31,22 @@ public class StringCalculatorShould {
     }
 
     @Test
-    public void returm_sum_of_numbers_delimited_by_commas() {
+    public void return_sum_of_numbers_delimited_by_commas() {
         int result = stringCalculator.add("1,2,3,4");
+
+        assertEquals(result, 10);
+    }
+
+    @Test
+    public void return_sum_of_numbers_delimited_by_line_break() {
+        int result = stringCalculator.add("1\n2\n3\n4");
+
+        assertEquals(result, 10);
+    }
+
+    @Test
+    public void return_sum_of_numbers_with_both_delimiters() {
+        int result = stringCalculator.add("1,2\n3\n4");
 
         assertEquals(result, 10);
     }

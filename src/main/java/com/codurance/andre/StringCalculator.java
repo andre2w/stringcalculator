@@ -12,9 +12,9 @@ public class StringCalculator {
 
         if (operation.length() == 1)
             return parseInt(operation);
-        
 
-        String[] numbers = operation.split(",");
+
+        String[] numbers = operation.split("\\n|,");
 
         return Arrays.stream(numbers)
                 .mapToInt(Integer::parseInt)
